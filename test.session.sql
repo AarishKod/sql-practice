@@ -52,7 +52,6 @@ CREATE TABLE Bookings(
     id INT AUTO_INCREMENT,
     guest_id INT NOT NULL,
     room_id INT NOT NULL,
-    check_in DATETIME,
     PRIMARY KEY (id),
     FOREIGN KEY (guest_id) REFERENCES Users(id),
     FOREIGN KEY (room_id) REFERENCES Rooms(id)
@@ -64,15 +63,12 @@ SELECT * From Rooms;
 SELECT * FROM Users;
 
 -- @block
--- INSERT INTO Users(email, bio, country)
--- VALUES
---     ("kodnaney.a@northeastern.edu", "College Student", "MA");
-INSERT INTO Bookings(guest_id, room_id, check_in)
+INSERT INTO Bookings(guest_id, room_id)
 VALUES 
-    (1, 2, '2023-10-06 14:30:15'),
-    (9, 1, NOW()),
-    (3, 1, '2025-10-06 14:30:15'),
-    (1, 1, NOW());
+    (1, 2),
+    (9, 1),
+    (3, 1),
+    (1, 1);
 
 -- @block Rooms a user has booked
 SELECT
@@ -87,6 +83,11 @@ WHERE guest_id = 1
 SELECT * FROM Bookings
 INNER JOIN Users ON Bookings.guest_id = guest_id
 WHERE room_id = 2;
+
+-- @block
+SELECT * FROM Bookings
+INNER JOIN Rooms on Rooms.id = room_id
+LEFT JOIN Users on Users.id = guest_id
 
 -- @block
 DROP TABLE Bookings
